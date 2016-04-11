@@ -23,7 +23,7 @@ RUN             apt-get  update                                                 
       &&        echo       "set_lk_max_objects 1500"    >>  DB_CONFIG                                                                       \
       &&        echo       "set_lk_max_locks 1500"      >>  DB_CONFIG                                                                       \
       &&        echo       "set_lk_max_lockers 1500"    >>  DB_CONFIG                                                                       \
-      &&        chmod      -r        openldap:openldap      /var/lib/ldap                                                                   \
+      &&        chown      -r        openldap:openldap      /var/lib/ldap                                                                   \
       &&        ln         -s        /etc/default/slapd     /etc/ldap/default_slapd
 
 # Copying the Slapd Configuration File
