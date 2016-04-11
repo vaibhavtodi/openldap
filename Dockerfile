@@ -14,7 +14,20 @@ WORKDIR         $home
 
 # Installing OpenLdap
 RUN             apt-get  update                                                                                                             \
-      &&        DEBIAN_FRONTEND=noninteractive    apt-get   install  -y   ldap-utils  slapd
+      &&        DEBIAN_FRONTEND=noninteractive    apt-get   install  -y   ldap-utils                                                        \
+                                                                          slapd                                                             \
+                                                                          ldapvi                                                            \
+      &&        rm         -f        /var/lib/ldap/*                                                                                        \
+      &&        touch                /var/lib/ldap/DB_CONFIG                                                                                \
+      &&        echo       "set_cachesize 0 2097152 0"  >   DB_CONFIG                                                                       \
+      &&        echo       "set_lk_max_objects 1500"    >>  DB_CONFIG                                                                       \
+      &&        echo       "set_lk_max_locks 1500"      >>  DB_CONFIG                                                                       \
+      &&        echo       "set_lk_max_lockers 1500"    >>  DB_CONFIG                                                                       \
+      &&        chmod      -r        openldap:openldap      /var/lib/ldap                                                                   \
+      &&        ln         -s        /etc/default/slapd     /etc/ldap/default_slapd
+
+# Copying the Slapd Configuration File
+COPY            def_slapd.conf       /etc/ldap/slapd.conf
 
 # Copy entrpoint.sh
 COPY            entrypoint.sh        /entrypoint.sh
