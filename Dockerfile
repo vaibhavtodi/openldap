@@ -18,16 +18,24 @@ RUN             apt-get  update                                                 
                                                                           slapd                                                             \
                                                                           ldapvi                                                            \
       &&        rm         -f        /var/lib/ldap/*                                                                                        \
+      &&        mkdir                /var/run/slapd                                                                                         \
+      &&        touch                /var/run/slapd/slapd.pid                                                                               \
       &&        touch                /var/lib/ldap/DB_CONFIG                                                                                \
       &&        echo       "set_cachesize 0 2097152 0"  >   DB_CONFIG                                                                       \
       &&        echo       "set_lk_max_objects 1500"    >>  DB_CONFIG                                                                       \
       &&        echo       "set_lk_max_locks 1500"      >>  DB_CONFIG                                                                       \
       &&        echo       "set_lk_max_lockers 1500"    >>  DB_CONFIG                                                                       \
       &&        chown      -R        openldap:openldap      /var/lib/ldap                                                                   \
+      &&        chown      -R        openldap:openldap      /var/run/slapd                                                                  \
       &&        ln         -s        /etc/default/slapd     /etc/ldap/default_slapd
+
+
 
 # Copying the Slapd Configuration File
 COPY            def_slapd.conf       /etc/ldap/slapd.conf
+
+# Copying the Default Slapd Configuration file in /etc/default
+COPY            def-slapd_config     /etc/default/slapd
 
 # Copy entrpoint.sh
 COPY            entrypoint.sh        /entrypoint.sh
