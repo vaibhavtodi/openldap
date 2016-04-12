@@ -18,8 +18,6 @@ RUN             apt-get  update                                                 
                                                                           slapd                                                             \
                                                                           ldapvi                                                            \
       &&        rm         -f        /var/lib/ldap/*                                                                                        \
-      &&        mkdir                /var/run/slapd                                                                                         \
-      &&        touch                /var/run/slapd/slapd.pid                                                                               \
       &&        touch                /var/lib/ldap/DB_CONFIG                                                                                \
       &&        echo       "set_cachesize 0 2097152 0"  >   DB_CONFIG                                                                       \
       &&        echo       "set_lk_max_objects 1500"    >>  DB_CONFIG                                                                       \
