@@ -27,8 +27,6 @@ RUN             apt-get  update                                                 
       &&        chown      -R        openldap:openldap      /var/run/slapd                                                                  \
       &&        ln         -s        /etc/default/slapd     /etc/ldap/default_slapd
 
-
-
 # Copying the Slapd Configuration File
 COPY            def_slapd.conf       /etc/ldap/slapd.conf
 
@@ -51,4 +49,3 @@ EXPOSE          389                  636
 
 # CMD instruction
 CMD             ["/entrypoint.sh"]
-
